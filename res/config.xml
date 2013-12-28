@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<appname></appname>
+	<appdirectory>Admin</appdirectory>
+	<routeaction>Admin</routeaction>
+	<routetarget>index</routetarget>
+</config> 
