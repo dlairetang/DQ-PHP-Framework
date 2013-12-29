@@ -37,9 +37,9 @@ class M extends D
     {
 	require("./Applications/".APP_NAME."/Model/".$model.".class.php");
     }
-	public function SysLM($model)
+	public function SysLM($addons)
 	{
-	require("./System/sysmdl/".$model.".class.php");
+	require("./System/addons/".$addons.".addons.php");
 	}
     public function assign($what,$target)
     {
