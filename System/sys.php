@@ -41,6 +41,10 @@ class M extends D
 	{
 	require("./System/addons/".$addons.".addons.php");
 	}
+	public function Sysinstances($class)
+	{
+	return new $class.'Addons';
+	}
     public function assign($what,$target)
     {
         $this->tpl->assign($what,$target);
