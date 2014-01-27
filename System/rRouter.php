@@ -19,8 +19,8 @@ class R
             $route[]=$route_name;
 	}
         $route=$this->ra($route);
-        $c_name=$route[0].'_Action';
-        $c_path='.'.DS.'Applications'.DS.APP_NAME.DS.'Action'.DS.$c_name.'.php';
+        $c_name=$route[1].'_Action';
+        $c_path='.'.DS.'Applications'.DS.$route[0].DS.'Action'.DS.$c_name.'.php';
         $fileExists = @file_get_contents($c_path, null, null, -1, 1) ? true : false;
 	if($fileExists==1)
         {
@@ -36,11 +36,11 @@ class R
         }
         $class_methods = get_class_methods($c_name);
         
-        if(!in_array($route[1],$class_methods))
+        if(!in_array($route[2],$class_methods))
         {
             die("系统错误,控制器方法必须存在,请<a href=/index/index/>点击</a>返回首页");
         }else{
-            $controller->$route[1]();
+            $controller->$route[2]();
         }
     }
     public function ra($route)

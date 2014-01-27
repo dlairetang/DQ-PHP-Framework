@@ -4,8 +4,8 @@ session_start();
 *@模板类继承PDO-MySQL类,让控制器更方便调用
 *@模板类可按照需求进行拓展相应底包功能
 **/
-require('.\System\pdo\pdo.class.php');
-require('.\System\mb\libs\Smarty.class.php');
+require('.'.DS.'System'.DS.'pdo'.DS.'pdo.class.php');
+require('.'.DS.'System'.DS.'mb'.DS.'libs'.DS.'Smarty.class.php');
 class M extends D
 {
     public $tpl=NULL;
@@ -19,14 +19,15 @@ class M extends D
         $this->tpl->caching = true;
         $this->tpl->cache_dir = ".".DS."cache".DS."cache";
         $this->tpl->cache_lifetime = 100;
-        $this->database=new D(array(
+        if(APP_SQL_STT=="on"){
+		$this->database=new D(array(
         'database_type' => APP_DATABASE_TYPE,
 	'database_name' => APP_DATABASE_NAME,
 	'server' => APP_DATABASE_SERVER,
 	'username' => APP_DATABASE_USER,
 	'password' => APP_DATABASE_PASSWORD,
 	'charset' => 'utf8'
-        ));
+        ));}
         return $this;
     }
     public function instances($class)
@@ -35,11 +36,15 @@ class M extends D
     }
     public function LoadModule($model)
     {
-	require("./Applications/".APP_NAME."/Model/".$model.".class.php");
+	require(".".DS."Applications".DS.APP_NAME.DS."Model".DS.$model.".class.php");
     }
 	public function SysLM($addons)
 	{
 	require("./System/addons/".$addons.".addons.php");
+	}
+	public function Sysinstances($class)
+	{
+	return new $class.'Addons';
 	}
     public function assign($what,$target)
     {
