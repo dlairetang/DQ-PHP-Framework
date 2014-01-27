@@ -1,4 +1,4 @@
-DQ_PHP_framework_v1.0
+DQ_PHP_framework_v1.1
 =====================
 
 DQFramework V1.0 based on GPL
