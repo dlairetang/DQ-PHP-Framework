@@ -1,7 +1,7 @@
-DQ_PHP_framework_v1.1
+DQ_PHP_framework_v1.4
 =====================
 
-DQFramework V1.0 based on GPL
+DQFramework V1.4 based on GPL
 
 开发者:Dlairetang@gmail.com
 
