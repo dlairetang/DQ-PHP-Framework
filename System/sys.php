@@ -19,6 +19,8 @@ class M extends D
         $this->tpl->caching = true;
         $this->tpl->cache_dir = ".".DS."cache".DS."cache";
         $this->tpl->cache_lifetime = 100;
+		$this->assign("wtitle",APP_TITLE);
+		$this->assign("respoi","http://s1.img.gdylc.cc/res/");
         if(APP_SQL_STT=="on"){
 		$this->database=new D(array(
         'database_type' => APP_DATABASE_TYPE,
@@ -30,13 +32,42 @@ class M extends D
         ));}
         return $this;
     }
-    public function instances($class)
+	public function urlphrase()
     {
-	return new $class;
+    $url_part=APP_URL_PHRASE;
+    $url_part_phase=substr($url_part,-1);
+	$url_part_phase=='/'?$url_part=substr($url_part,0,strlen($url_part)-1):$url_part;
+	$url_arr=explode("/",$url_part);
+    return $url_arr;
+    }
+    public function ra($route)
+    {
+	array_shift($route);
+	array_shift($route);
+	return $route;
+    }
+	public function route()
+	{
+	$route=array();
+    $url_arr=$this->urlphrase();
+    foreach($url_arr as $url_route => $route_name)
+	{
+    $route[]=$route_name;
+	}
+    $route=$this->ra($route);
+	return $route[0];
+	}
+    public function instances($class,$c1='',$c2='',$c3='')
+    {
+	return new $class($c1,$c2,$c3);
     }
     public function LoadModule($model)
     {
-	require(".".DS."Applications".DS.APP_NAME.DS."Model".DS.$model.".class.php");
+	require(".".DS."Applications".DS.$this->route().DS."Model".DS.$model.".class.php");
+    }
+    public function LoadModule_fixed($model)
+    {
+	include(".".DS."Applications".DS.$this->route().DS."Model".DS.$model.".class.php");
     }
 	public function SysLM($addons)
 	{
@@ -53,7 +84,7 @@ class M extends D
     }
     public function display($what,$list='Public')
     {
-        $this->tpl->template_dir = ".".DS."Applications".DS.APP_NAME.DS."View".DS."templates".DS.$list;
+        $this->tpl->template_dir = ".".DS."Applications".DS.$this->route().DS."View".DS."templates".DS.$list;
         $this->tpl->display($what);
         return $this;
     }
@@ -116,6 +147,18 @@ class M extends D
     {
         $info=$this->database->info();
         return $info;
+    }
+    public function PR($s)
+    {
+	switch($s)
+	{
+	    case "loginerror":
+	    header('Refresh: 3; url=/Home/robot/main/');
+	    echo '<h1 style="color: #428bca;font-family: "微软雅黑", Helvetica, Arial, sans-serif;text-shadow: #333333 0 1px 0;">:)你还没登录呢小子,给你三秒滚回去登录!</h1>';
+	    break;
+	}
+	
+	return $this;
     }
 }
 ?>

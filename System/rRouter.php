@@ -19,18 +19,36 @@ class R
             $route[]=$route_name;
 	}
         $route=$this->ra($route);
-        $c_name=$route[1].'_Action';
+	$group=I("group","group");
+	$grouparr=array();
+        $grouparr=explode(",",$group);
+	if(!$route)
+	{
+	   header("Refresh:0;url=".APP_ROUTE_DEFAULT);
+	   exit; 
+	}
+        if(!in_array($route[0],$grouparr))
+        {
+            echo $route[0]."群组不存在,请<a href=".APP_ROUTE_DEFAULT.">点击</a>返回首页<br /><h1>:) 3秒后自动返回<h1>";
+	    header("Refresh:3;url=".APP_ROUTE_DEFAULT);
+	    exit;
+        }
+	$c_name=$route[1].'_Action';
         $c_path='.'.DS.'Applications'.DS.$route[0].DS.'Action'.DS.$c_name.'.php';
         $fileExists = @file_get_contents($c_path, null, null, -1, 1) ? true : false;
 	if($fileExists==1)
         {
             require($c_path);
         }else{
-            header("location: ".APP_ROUTE_DEFAULT);
+	    echo "系统错误,控制器路径".$c_path."<br />及其表现路由节点".$route[1]."不存在,请<a href=".APP_ROUTE_DEFAULT.">点击</a>返回首页<br /><h1>:) 3秒后自动返回<h1>";
+            header("Refresh:3;url=".APP_ROUTE_DEFAULT);
+	    exit;
         }
         if (!class_exists($c_name))
         {
-            die("系统错误,控制器".$c_name."必须存在,请<a href=/index/index/>点击</a>返回首页");
+            echo "系统错误,控制器".$c_name."必须存在,请<a href=".APP_ROUTE_DEFAULT.">点击</a>返回首页<br /><h1>:) 3秒后自动返回<h1>";
+	    header("Refresh:3;url=".APP_ROUTE_DEFAULT);
+	    exit;
 	}else{
             $controller=new $c_name;
         }
@@ -38,10 +56,13 @@ class R
         
         if(!in_array($route[2],$class_methods))
         {
-            die("系统错误,控制器方法必须存在,请<a href=/index/index/>点击</a>返回首页");
+            echo "系统错误,控制器方法必须存在,请<a href=".APP_ROUTE_DEFAULT.">点击</a>返回首页<br /><h1>:) 3秒后自动返回<h1>";
+	    header("Refresh:3;url=".APP_ROUTE_DEFAULT);
+	    exit;
         }else{
             $controller->$route[2]();
         }
+	
     }
     public function ra($route)
     {

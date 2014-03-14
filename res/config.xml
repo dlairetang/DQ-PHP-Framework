@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-	<appname>robot</appname>
-	<appdirectory>Home</appdirectory>
-	<routeaction>robot</routeaction>
-	<routetarget>main</routetarget>
+	<appname><!--网站标题名称--></appname>
+	<appdirectory><!--默认路由群组--></appdirectory>
+	<routeaction><!-- 默认路由名字--></routeaction>
+	<routetarget><!-- 默认路由功能--></routetarget>
 </config> 

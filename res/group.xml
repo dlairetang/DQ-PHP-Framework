@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <group><!-- 群组名字使用逗号隔开 例如 Home,API--></group>
+    
+</config> 
